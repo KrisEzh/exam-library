@@ -18,7 +18,7 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     @Override
     public Set<Question> getQuestions(int amount) throws BadRequestException {
-        if(amount > 5){
+        if( javaQuestionService.getAll().size() < amount || amount < 0 ){
             throw new BadRequestException();
         }
         Set<Question> qList = new HashSet<>();

@@ -9,10 +9,12 @@ import java.util.Set;
 @RestController
 
 public class ExaminerServiceController {
-    private final ExaminerServiceImpl examinerService;
-    public ExaminerServiceController(ExaminerServiceImpl examinerService){
-        this.examinerService=(ExaminerServiceImpl) examinerService;
+    private final ExaminerService examinerService;
+
+    public ExaminerServiceController(ExaminerService examinerService) {
+       this. examinerService = examinerService;
     }
+
 
     @GetMapping(path="/get")
     public Set<Question> getQuestions(@RequestParam("amount") int amount){

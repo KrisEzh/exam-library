@@ -9,12 +9,6 @@ public class JavaQuestionService implements QuestionService{
 
     Set<Question> questions = new HashSet<>();
 
-    Question question1 = new Question("colour", "white");
-    Question question2 = new Question("number", "two");
-    Question question3 = new Question("season", "fall");
-    Question question4 = new Question("letter", "a");
-    Question question5 = new Question("fruit", "apple");
-
     @Override
     public Question add(String question, String answer) {
          Question newQuestion = new Question(question,answer);
@@ -23,8 +17,12 @@ public class JavaQuestionService implements QuestionService{
 
     @Override
     public Question add(Question question) {
-        questions.add(question);
-        return question;
+        if (questions.contains(question)) {
+            throw new QuestionExistsException();
+        } else {
+            questions.add(question);
+            return question;
+        }
     }
 
     @Override
@@ -34,7 +32,11 @@ public class JavaQuestionService implements QuestionService{
     }
     @Override
     public Question remove(Question question){
-        questions.remove(question);
+        if(questions.contains(question)) {
+            questions.remove(question);
+        }else{
+            throw new QuestionNotFoundException();
+        }
         return question;
     }
 
@@ -47,9 +49,9 @@ public class JavaQuestionService implements QuestionService{
     @Override
     public Question getRandomQuestion() {
         var random = new Random();
-        var questions = Arrays.asList(question1,question2,question3,question4,question5);
-        var randQuestion = questions.get(random.nextInt(questions.size()));
-        return randQuestion;
+        Question[]questions = getAll().toArray(new Question[0]);
+        var randQuestion = random.nextInt(questions.length);
+        return questions[randQuestion];
 
     }
 

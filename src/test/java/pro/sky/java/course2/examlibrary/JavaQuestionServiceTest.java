@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 public class JavaQuestionServiceTest {
@@ -20,22 +20,17 @@ public class JavaQuestionServiceTest {
     Question question1 = new Question("colour", "white");
     Question question2 = new Question("number", "two");
     Question question3 = new Question("season", "fall");
-    Question question4 = new Question("letter", "a");
-    Question question5 = new Question("fruit", "apple");
+
 
     @BeforeEach
     public void setUp(){
          Question question1 = new Question("colour", "white");
          Question question2 = new Question("number", "two");
          Question question3 = new Question("season", "fall");
-         Question question4 = new Question("letter", "a");
-         Question question5 = new Question("fruit", "apple");
 
          out.add(question1);
          out.add(question2);
          out.add(question3);
-         out.add(question4);
-         out.add(question5);
     }
     @Test
     public void addQuestionTest(){
@@ -44,8 +39,6 @@ public class JavaQuestionServiceTest {
         actual.add(question1);
         actual.add(question2);
         actual.add(question3);
-        actual.add(question4);
-        actual.add(question5);
         assertTrue(actual.size()==expected.size()&&actual.containsAll(expected)&&expected.containsAll(actual));
     }
     @Test
@@ -55,8 +48,6 @@ public class JavaQuestionServiceTest {
         actual.add(question1);
         actual.add(question2);
         actual.add(question3);
-        actual.add(question4);
-        actual.add(question5);
         assertTrue(actual.size()==expected.size()&&actual.containsAll(expected)&&expected.containsAll(actual));
     }
     @Test
@@ -65,20 +56,16 @@ public class JavaQuestionServiceTest {
         assertNotNull(expected);
     }
     @Test
+    public void QuestionExistsExceptionTest() throws QuestionExistsException{
+        assertThrows(QuestionExistsException.class, () -> out.add(question1));
+    }
+    @Test
     public void removeTest(){
         Collection<Question> expected = new ArrayList<>(out.getAll().size()-1);
         Collection<Question> actual = new ArrayList<>();
+        actual.add(question1);
         actual.remove(question1);
-        actual.remove(question2);
-        actual.remove(question3);
-        actual.remove(question4);
-        actual.remove(question5);
         assertTrue(actual.size()==expected.size()&&actual.containsAll(expected)&&expected.containsAll(actual));
-    }
-    @Test
-    public void getRandomTest(){
-        when(random.nextInt()).thenReturn(0);
-        assertEquals(random.nextInt(),0 );
     }
     @Test
     public void getRandomQuestionTest(){
